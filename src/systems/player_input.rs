@@ -16,7 +16,6 @@ pub fn player_input(
 ) {
     let mut players = <(Entity, &Point)>::query().filter(component::<Player>());
     if let Some(key) = key {
-        let mut did_something = false;
         let delta = match key {
             VirtualKeyCode::Left => Point::new(-1, 0),
             VirtualKeyCode::Right => Point::new(1, 0),
@@ -39,7 +38,7 @@ pub fn player_input(
                                 <(Entity, &Carried, &Weapon)>::query()
                                     .iter(ecs)
                                     .filter(|(_, c, _)| c.0 == player)
-                                    .for_each(|(e, c, w)| {
+                                    .for_each(|(e, _c, _w)| {
                                         commands.remove(*e);
                                     })
                             }
@@ -70,7 +69,6 @@ pub fn player_input(
                 .filter(|(_, pos)| **pos == destination)
                 .for_each(|(entity, _)| {
                     hit_something = true;
-                    did_something = true;
                     commands.push((
                         (),
                         WantsToAttack {
@@ -80,7 +78,6 @@ pub fn player_input(
                     ));
                 });
             if !hit_something {
-                did_something = true;
                 commands.push((
                     (),
                     WantsToMove {
