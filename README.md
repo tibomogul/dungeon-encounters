@@ -12,8 +12,10 @@ Arrow keys
 - move player
 - when on an adjacent tile to monster and moving toward monster, attack
 - when moving on an exit tile, go to next level
+
 Space key
 - wait
+
 G key
 - when on the same tile as item, get item
 
